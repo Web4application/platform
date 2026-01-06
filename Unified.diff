@@ -1,0 +1,22 @@
+diff --git a/vp8/common/loongarch/sixtap_filter_lsx.c b/vp8/common/loongarch/sixtap_filter_lsx.c
+index 123456789..abcdef012 100644
+--- a/vp8/common/loongarch/sixtap_filter_lsx.c
++++ b/vp8/common/loongarch/sixtap_filter_lsx.c
+@@ -XXX,8 +XXX,16 @@ void vp8_sixtap_predict16x16_lsx(const uint8_t *src, int src_stride,
+                                  int xoffset, int yoffset,
+                                  uint8_t *dst, int dst_stride)
+ {
+-    const int8_t *h_filter = vp8_subpel_filters_lsx[xoffset - 1];
+-    const int8_t *v_filter = vp8_subpel_filters_lsx[yoffset - 1];
++    const int8_t *h_filter = NULL;
++    const int8_t *v_filter = NULL;
++
++    if (xoffset) {
++        h_filter = vp8_subpel_filters_lsx[xoffset - 1];
++    }
++
++    if (yoffset) {
++        v_filter = vp8_subpel_filters_lsx[yoffset - 1];
++    }
+
+     /* existing implementation continues unchanged */
