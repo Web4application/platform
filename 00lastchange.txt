@@ -1,0 +1,12 @@
+20240718
+  dtoa.c:  Tweak the change of 20240715 to fix a bug that caused dtoa
+to render 6.9999999999999996e-161 as 7e-161 to allow more efficiency
+in some cases:  change
+	if (!(zb & ures) && (ures-rb) << (1 - eulp) < ulp)
+		goto Fast_failed1;
+to
+	if (!(zb & ures) && (ures-rb) << (1 - eulp) < ulp) {
+		if ((ures + rb) << (2 - eulp) < ulp)
+			goto Roundup;
+		goto Fast_failed1;
+		}
